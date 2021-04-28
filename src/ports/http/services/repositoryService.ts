@@ -17,8 +17,8 @@ const breakerOptions: BreakerConfig = {
 const handleErrors = (response: Response) => !response.ok ? 
   Promise.reject(new Error(response.status.toString())) : 
   response
-  
 
+  
 const client = circuitBreakerHttpClient(breakerOptions)
 
 export const configureFailure = (failures: number) => 
