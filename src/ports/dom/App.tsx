@@ -1,5 +1,4 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import { Configure } from './Configure/Configure';
 import { RepositoryList } from './RepositoryList/RepositoryList';

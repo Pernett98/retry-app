@@ -1,11 +1,7 @@
 import { failure, RemoteData, success } from '@devexperts/remote-data-ts'
 import * as E from 'fp-ts/lib/Either'
 import * as TE from 'fp-ts/lib/TaskEither'
-
 import { pipe } from 'fp-ts/lib/function'
-
-
-
 import { Repository } from "../../../domain/Repository";
 import { BreakerConfig, circuitBreakerHttpClient } from "../client/circuitBreakerHttpClient"
 
@@ -14,7 +10,7 @@ const breakerOptions: BreakerConfig = {
   maxTime: 20000,
   delay: 400,
   maxBreakerFailures: 3,
-  resetTimeoutSecs: 30,
+  resetTimeoutSecs: 10,
   breakerDescription: 'Repository Client failed!'
 }
 

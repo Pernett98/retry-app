@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import React from 'react'
 import { useRepositoryData } from './useRepositoryData'
 import { fold } from '@devexperts/remote-data-ts'
 
