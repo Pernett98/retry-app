@@ -1,6 +1,7 @@
 import { failure, RemoteData, success } from '@devexperts/remote-data-ts'
 import * as E from 'fp-ts/lib/Either'
 import * as TE from 'fp-ts/lib/TaskEither'
+import * as T from 'fp-ts/lib/Task'
 import { pipe } from 'fp-ts/lib/function'
 import { Repository } from "../../../domain/Repository";
 import { BreakerConfig, circuitBreakerHttpClient } from "../client/circuitBreakerHttpClient"
@@ -11,11 +12,13 @@ const breakerOptions: BreakerConfig = {
   delay: 400,
   maxBreakerFailures: 3,
   resetTimeoutSecs: 10,
-  breakerDescription: 'Repository Client failed!'
+  breakerDescription: 'The service is Unavailable'
 }
 
 const handleErrors = (response: Response) => !response.ok ? 
-  Promise.reject(new Error(response.status.toString())) : 
+  Promise.reject(new Error(
+    `server failed with status: ${response.status.toString()}`
+  )) : 
   response
 
   
@@ -33,13 +36,10 @@ export const getRepositories = () => pipe(
     fetchRepositories,
     check
   ),
-  ([req, ref]) => req,
+  ([req]) => req,
   TE.fold<Error, Repository[], RemoteData<Error, Repository[]>>(
-      err => async () => {
-        console.log(err)
-        return failure(err)
-      }, 
-      repositories => async () => success(repositories)
+      err => T.of(failure(err)), 
+      repositories => T.of(success(repositories))
     )
 )
 

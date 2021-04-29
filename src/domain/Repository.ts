@@ -3,9 +3,3 @@ export type Repository  ={
   starts: number
   language: string
 }
-
-export type RepositoryResponse = {
-  name: string
-  stargazers_count: number
-  language: string
-}

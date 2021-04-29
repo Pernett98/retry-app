@@ -7,7 +7,6 @@ import * as TE from 'fp-ts/lib/TaskEither';
 import * as IOR from 'fp-ts/lib/IORef';
 import * as IO from 'fp-ts/lib/IO';
 import { flow, pipe } from 'fp-ts/lib/function';
-import { log } from 'fp-ts/lib/Console';
 
 import { breakerClosed } from 'circuit-breaker-monad/lib/helpers';
 import { circuitBreaker } from 'circuit-breaker-monad/lib';
@@ -20,6 +19,7 @@ import {
   RetryStatus,
 } from 'retry-ts'
 import { retrying } from 'retry-ts/lib/Task'
+import { infoExponentialBackoff, infoCircuitBraker } from '../../../logger';
 
 export type RetryConfig = {
   maxTime: number,
@@ -43,33 +43,34 @@ const configureRetryPolicy = ({ maxTime, delay, limit }: RetryConfig) => capDela
 
 type ShouldRetry<E,A> = {
   ref: BreakerEnvironment<A>,
-  check: (a: Either<Error | E, A>) => boolean
+  check: (result: Either<Error | E, A>) => boolean
 }
 
-const shouldRetry = <E,A>({
+const shouldRetry = <E, A>({
   ref,
   check
-}: ShouldRetry<E,A>) => flow(
-  (s: Either<E,A>) => {
-    console.log('s',{s, ref})
-    return s
-  },
-  (result) => ({
+}: ShouldRetry<E, A>) => flow(
+  (result: Either<E, A>) => ({
     result,
     isClosed: isBreakerStateClosed(ref)()
   }),
   ({isClosed, result}) => isClosed && check(result),
+  result => {
+    infoCircuitBraker(`state is: ${ref.breakerState.read().tag}`)()
+    infoExponentialBackoff(`should retry? ${result}`)()
+    return result
+  }
 )
 
 const isBreakerStateClosed = <A>(breakerEnvironment: BreakerEnvironment<A>) =>
   pipe(
     breakerEnvironment.breakerState.read,
-    IO.map(s => s.tag === 'Closed')
+    IO.map(state => state.tag === 'Closed')
   )
 
 const logDelay = (status: RetryStatus) =>
   TE.rightIO(
-    log(
+    infoExponentialBackoff(
       pipe(
         status.previousDelay,
         O.map(delay => `retrying in ${delay} milliseconds...`),

@@ -3,7 +3,7 @@ import { useRepositoryData } from './useRepositoryData'
 import { fold } from '@devexperts/remote-data-ts'
 
 import { Repository } from '../../../domain/Repository'
-import { Table, Skeleton, Alert, Button } from 'antd'
+import { Table, Skeleton, Alert, Button, Divider } from 'antd'
 
 const columns = [
   {
@@ -25,8 +25,8 @@ const columns = [
 
 const renderRepositories = (repositories: Repository[]) => (
   <Table
-    dataSource={repositories} 
-    columns={columns} 
+    dataSource={repositories.map((r, i)=> ({...r, key: i}))} 
+    columns={columns}
   />
 )
 
@@ -35,14 +35,12 @@ const renderLoading = () => <Skeleton active />
 
 const renderInitial = () => <></>
 
-const renderError = (error: Error) => {
-  console.log({error})
-  return <Alert 
-  type='error'
-  message={error.message}
-/>
-}
-  
+const renderError = (error: Error) => (
+  <Alert 
+    type='error'
+    message={error.message}
+  />
+)  
 
 const foldRepoData = fold<Error, Repository[], JSX.Element>(
   renderInitial,
@@ -50,7 +48,6 @@ const foldRepoData = fold<Error, Repository[], JSX.Element>(
   renderError,
   renderRepositories,
 )
-
 
 export const RepositoryList = () => {
   const {
@@ -60,7 +57,14 @@ export const RepositoryList = () => {
   
   return (
     <div>
-      <Button size='large' type='primary' onClick={getRepos}>Search</Button>
+      <Divider>Repositories</Divider>
+      <Button 
+        size='large' 
+        type='primary'
+        onClick={getRepos}
+      >
+        Search
+      </Button>
       {foldRepoData(repositories)}
     </div>
   )

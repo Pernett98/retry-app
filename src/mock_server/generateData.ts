@@ -1,4 +1,4 @@
-import { RepositoryResponse } from '../domain/Repository'
+import { Repository } from '../domain/Repository'
 import { 
   Gen, 
   generateSample, 
@@ -8,9 +8,9 @@ import {
   mkSeed,
 } from '@no-day/fp-ts-generators'
 
-const genRepositories: Gen<RepositoryResponse> = recordOf({
+const genRepositories: Gen<Repository> = recordOf({
   name: string(),
-  'stargazers_count': int({ min: 0, max: 100 }),
+  starts: int({ min: 0, max: 100 }),
   language: string()
 })
 
