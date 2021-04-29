@@ -1,23 +1,23 @@
 {
   "files": {
-    "main.css": "/retry-app/static/css/main.f10eae96.chunk.css",
-    "main.js": "/retry-app/static/js/main.32fd5587.chunk.js",
-    "main.js.map": "/retry-app/static/js/main.32fd5587.chunk.js.map",
+    "main.css": "/retry-app/static/css/main.19f28fc6.chunk.css",
+    "main.js": "/retry-app/static/js/main.58bc457d.chunk.js",
+    "main.js.map": "/retry-app/static/js/main.58bc457d.chunk.js.map",
     "runtime-main.js": "/retry-app/static/js/runtime-main.5c10c061.js",
     "runtime-main.js.map": "/retry-app/static/js/runtime-main.5c10c061.js.map",
     "static/css/2.03710b91.chunk.css": "/retry-app/static/css/2.03710b91.chunk.css",
-    "static/js/2.913862c2.chunk.js": "/retry-app/static/js/2.913862c2.chunk.js",
-    "static/js/2.913862c2.chunk.js.map": "/retry-app/static/js/2.913862c2.chunk.js.map",
+    "static/js/2.cf7ddd53.chunk.js": "/retry-app/static/js/2.cf7ddd53.chunk.js",
+    "static/js/2.cf7ddd53.chunk.js.map": "/retry-app/static/js/2.cf7ddd53.chunk.js.map",
     "index.html": "/retry-app/index.html",
     "static/css/2.03710b91.chunk.css.map": "/retry-app/static/css/2.03710b91.chunk.css.map",
-    "static/css/main.f10eae96.chunk.css.map": "/retry-app/static/css/main.f10eae96.chunk.css.map",
-    "static/js/2.913862c2.chunk.js.LICENSE.txt": "/retry-app/static/js/2.913862c2.chunk.js.LICENSE.txt"
+    "static/css/main.19f28fc6.chunk.css.map": "/retry-app/static/css/main.19f28fc6.chunk.css.map",
+    "static/js/2.cf7ddd53.chunk.js.LICENSE.txt": "/retry-app/static/js/2.cf7ddd53.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.5c10c061.js",
     "static/css/2.03710b91.chunk.css",
-    "static/js/2.913862c2.chunk.js",
-    "static/css/main.f10eae96.chunk.css",
-    "static/js/main.32fd5587.chunk.js"
+    "static/js/2.cf7ddd53.chunk.js",
+    "static/css/main.19f28fc6.chunk.css",
+    "static/js/main.58bc457d.chunk.js"
   ]
 }
